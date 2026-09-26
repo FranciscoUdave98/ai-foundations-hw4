@@ -149,7 +149,7 @@ async def _answer(request: ChatRequest, customer: Customer | None, status: Statu
     except ModelHTTPError as err:
         if not _is_content_filter(err):
             log.exception("Chat agent failed")
-            raise HTTPException(503, "Our shopping assistant is unavailable right now. Please try again in a moment.")
+            raise HTTPException(503, "Our shopping assistant is unavailable right now. Please try again in a moment.") from None
         # The provider's safety filter blocked the message (e.g. a jailbreak attempt): answer politely.
         log.info("Chat message blocked by the provider's content filter")
         audit("run_end", result="blocked by provider content filter", reason="Safety filter")
@@ -157,11 +157,11 @@ async def _answer(request: ChatRequest, customer: Customer | None, status: Statu
     except UsageLimitExceeded:
         log.warning("Chat hit the agent usage limit")
         audit("run_end", result="usage limit exceeded", reason="Loop limit reached")
-        raise HTTPException(503, "That question took too many steps. Could you ask it a bit more simply?")
+        raise HTTPException(503, "That question took too many steps. Could you ask it a bit more simply?") from None
     except Exception as err:
         log.exception("Chat agent failed")
         audit("run_end", result=f"error: {type(err).__name__}", reason="Agent failure")
-        raise HTTPException(503, "Our shopping assistant is unavailable right now. Please try again in a moment.")
+        raise HTTPException(503, "Our shopping assistant is unavailable right now. Please try again in a moment.") from None
 
     output = outcome.output
     log.info(

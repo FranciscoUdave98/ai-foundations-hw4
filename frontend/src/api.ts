@@ -170,6 +170,9 @@ export interface CartView {
 
 export const getCart = () => request<CartView>('/api/cart')
 
+export const addCartItem = (product_id: string, size: string, quantity = 1) =>
+  postJson<CartView>('/api/cart', { product_id, size, quantity })
+
 export const removeCartItem = (itemId: number) => request<CartView>(`/api/cart/${itemId}`, { method: 'DELETE' })
 
 export const getChatHistory = () => request<ChatHistoryMessage[]>('/api/chat/history')

@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
-import { ApiError, formatPrice, getProduct, type ProductDetail, type SizeStock } from '../api'
+import { Link, useNavigate, useParams } from 'react-router-dom'
+import { addCartItem, ApiError, formatPrice, getProduct, type ProductDetail, type SizeStock } from '../api'
 import { BulldogLoader } from '../components/Brand'
 import ProductGallery from '../components/ProductGallery'
 import RelatedCarousel from '../components/RelatedCarousel'
+import { notifyCartChanged } from '../cartEvents'
 import { rememberViewed } from '../pageContext'
+import { useAuth } from '../useAuth'
 
 function stockLabel(s: SizeStock) {
   if (!s.in_stock) return 'Sold out'
@@ -17,6 +19,9 @@ export default function ProductPage() {
   // Results are tagged with the id they belong to, so a new productId shows "Loading" without resetting state.
   const [loaded, setLoaded] = useState<{ id: string; product?: ProductDetail; error?: string }>({ id: '' })
   const [selection, setSelection] = useState({ id: '', size: '' })
+  const [bagNote, setBagNote] = useState({ key: '', text: '' })
+  const { user } = useAuth()
+  const navigate = useNavigate()
 
   useEffect(() => {
     let cancelled = false
@@ -62,6 +67,23 @@ export default function ProductPage() {
     )
 
   const chosen = product.sizes.find((s) => s.size === selected)
+  const noteKey = `${productId}:${selected}`
+
+  // The shopper's own click is the explicit consent to add (the assistant must ask first instead).
+  async function addToBag() {
+    if (!chosen) return
+    if (!user) {
+      navigate('/login', { state: { from: `/products/${productId}` } })
+      return
+    }
+    try {
+      await addCartItem(productId, chosen.size, 1)
+      notifyCartChanged()
+      setBagNote({ key: noteKey, text: `Added size ${chosen.size} to your bag.` })
+    } catch (err) {
+      setBagNote({ key: noteKey, text: err instanceof Error ? err.message : 'Could not add to your bag.' })
+    }
+  }
 
   return (
     <div className="container">
@@ -124,9 +146,19 @@ export default function ProductPage() {
           )}
           <p className="size-status" aria-live="polite">
             {chosen
-              ? `Size ${chosen.size}: ${stockLabel(chosen).toLowerCase()}. Stop by 57 Broadway or ask our assistant to hold one.`
+              ? `Size ${chosen.size}: ${stockLabel(chosen).toLowerCase()}.`
               : 'Pick a size to check availability.'}
           </p>
+          <div className="bag-actions">
+            <button className="btn btn-primary" onClick={addToBag} disabled={!chosen || !chosen.in_stock}>
+              {user ? 'Add to bag' : 'Log in to add to bag'}
+            </button>
+            {bagNote.key === noteKey && bagNote.text && (
+              <span className="bag-note" role="status">
+                {bagNote.text} <Link to="/bag">View bag</Link>
+              </span>
+            )}
+          </div>
 
           {product.search_tags.length > 0 && (
             <div className="tags">

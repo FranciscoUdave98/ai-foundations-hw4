@@ -47,6 +47,11 @@ def color_family(color: str) -> str:
     return c
 
 
+def mask_name(name: str) -> str:
+    """Initials only, e.g. 'Ada Lovelace' -> 'A. L.' (the report is public)."""
+    return " ".join(f"{part[0]}." for part in name.split() if part) or "—"
+
+
 def mask_email(email: str) -> str:
     """Keep the public report free of real addresses."""
     local, _, domain = email.partition("@")
@@ -61,7 +66,7 @@ def profile(conn: sqlite3.Connection) -> dict:
     by_cat = defaultdict(lambda: {"count": 0, "prices": set(), "labels": set()})
     colors = Counter()
     raw_colors = set()
-    for pid, name, gtype, colors_json, price in rows:
+    for pid, _name, gtype, colors_json, price in rows:
         cat = category(gtype)
         cat_of[pid] = cat
         by_cat[cat]["count"] += 1
@@ -105,7 +110,7 @@ def profile(conn: sqlite3.Connection) -> dict:
     ]
 
     users = []
-    for uid, name, email, created, first, last in conn.execute(
+    for uid, name, email, created, _first, _last in conn.execute(
         "SELECT id, name, email, created_at, first_name, last_name FROM users ORDER BY id"
     ):
         msgs = dict(
@@ -114,7 +119,7 @@ def profile(conn: sqlite3.Connection) -> dict:
         users.append(
             {
                 "id": uid,
-                "name": name,
+                "name": mask_name(name),
                 "email": mask_email(email),
                 "created": created,
                 "user_msgs": msgs.get("user", 0),
@@ -270,7 +275,7 @@ td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; }
 
   <section>
     <h2>Users</h2>
-    <p class="lede">Shopper accounts created on the site. Passwords are stored only as hashes. Chat history is saved per user, so returning shoppers can pick up a conversation. Emails are masked in this report.</p>
+    <p class="lede">Shopper accounts created on the site. Passwords are stored only as hashes. Chat history is saved per user, so returning shoppers can pick up a conversation. Names and emails are masked in this report.</p>
     <div class="tiles" id="user-tiles"></div>
     <div class="grid">
       <div class="card"><h3>Accounts</h3><p class="sub">Every row in <code>users</code> (password hashes omitted)</p><div id="t-users"></div></div>

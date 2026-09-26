@@ -49,7 +49,7 @@ MESSAGES: dict[str, list[str]] = {
         "Doing inventory faster than a Commons lunch line…",
     ],
     "stock_size": [
-        "Checking if a {size} is hiding in the back…",
+        "Checking if a size {size} is hiding in the back…",
         "Counting {size_plural} one by one…",
         "Asking the stockroom: any {size_plural} left?",
     ],

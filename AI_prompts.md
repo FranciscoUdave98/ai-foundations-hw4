@@ -381,3 +381,30 @@ The gate unit test refused a same-turn confirmation, a vague reply, and a replay
 - **Checks before pushing:** reviewed the 70 files to be committed. None contains the API key, and none is a `.db`, `.env`, or under `data/`.
 - **README:** points to `output/harness.md` and lists the new files.
 - **Push:** committed and pushed to the public repo **https://github.com/FranciscoUdave98/ai-foundations-hw4**.
+
+
+## Final check (after Problem 13)
+
+### Prompt
+
+> Check that everything you did works for my homework and that you didn't do any mistakes
+
+### What was checked
+
+- **Fresh clone:** the public repo was cloned into an empty folder, then the backend was started and the frontend built from it.
+- **Test suites re-run against the live model:**
+  - guardrails: 17/17;
+  - customer memory: 22/22;
+  - cost routing and streaming: 6/6;
+  - safety and audit trail: 12/12;
+  - the confirmation gate unit test.
+- **Static checks:** `ruff` on the backend and `tsc` + `oxlint` on the frontend.
+- **Consistency:** every problem's deliverable, compared against its prompt.
+
+### Mistakes found and fixed
+
+- `output/database_overview.html` showed the seed users' full names in the public repo (emails were already masked). It now shows initials only, following the "minimize personal data" rule.
+- `output/design.md` mentioned an "Add to chat" button that doesn't exist; it now names the real buttons.
+- The product page told shoppers to "ask our assistant to hold one", which the assistant can't do, and the Bag page and harness mentioned an "Add to bag" button that was never built. The product page now has a real "Add to bag" button (or "Log in to add to bag"), using the existing bag API. The shopper's own click counts as consent.
+- A status line read "Checking if a M is hiding…"; it's now "a size M".
+- Lint clean-ups: `raise … from None` in the chat route and unused loop variables in `analyze_database.py`. None of them was a behavior bug.

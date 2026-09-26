@@ -475,3 +475,5 @@ button.nav-tab { border: none; cursor: pointer; font-family: inherit; }
 .bag-total { text-align: right; font-size: 18px; margin-top: 16px; }
 .link-button { background: none; border: none; padding: 0; color: var(--blue-600); font: inherit; text-decoration: underline; cursor: pointer; }
 @media (max-width: 720px) { .bag-item { grid-template-columns: 56px 1fr; } }
+.bag-actions { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin: 0 0 20px; }
+.bag-note { color: var(--ink-soft); font-size: 14px; }
