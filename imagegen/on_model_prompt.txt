@@ -1,0 +1,11 @@
+Use case: product-mockup (on-model apparel photo)
+Asset type: e-commerce product page photo for a college apparel shop
+Primary request: a photorealistic photo of one adult college-age model wearing exactly the garment shown in Image 1
+Input images: Image 1: reference product photo (the garment to reproduce)
+Scene/backdrop: plain, softly lit light gray-white studio backdrop
+Subject: a single friendly adult model, natural relaxed pose, looking toward the camera
+Style/medium: clean catalog photography, natural skin texture, realistic fabric folds
+Composition/framing: square, garment centered and fully visible from collar to hem, model framed from mid-thigh up
+Lighting/mood: soft even studio light, bright and approachable
+Constraints: reproduce the garment faithfully: same garment type, fabric color, graphics, lettering, crest, and their placement and size; plain dark pants or jeans; no other logos or brands
+Avoid: changing or misspelling any lettering on the garment; extra text; watermarks; props; multiple people

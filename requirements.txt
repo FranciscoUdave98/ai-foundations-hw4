@@ -1,0 +1,9 @@
+openai>=1.50.0
+python-dotenv>=1.0.1
+fastapi
+uvicorn[standard]
+pydantic-ai-slim[openai]
+# image prep (whiten_backgrounds.py)
+pillow
+numpy
+scipy

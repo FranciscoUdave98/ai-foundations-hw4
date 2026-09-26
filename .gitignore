@@ -1,0 +1,43 @@
+# Secrets — never commit API keys
+.env
+.env.*
+!.env.example
+
+# Virtual environment (rebuild with: python -m venv .venv && pip install -r requirements.txt)
+.venv/
+venv/
+
+# Python caches
+__pycache__/
+*.pyc
+
+# OS / editor clutter
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Data — the whole local data pack stays out of git (database + product images)
+data/
+data.zip
+data/campus_customs.db
+data/products/
+data/products_original/
+data/on_model/
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+
+# Node / React + Vite front end
+node_modules/
+dist/
+*.tsbuildinfo
+.vite/
+npm-debug.log*
+
+# Logs
+*.log
+
+# Scratch files from the imagegen CLI
+tmp/
