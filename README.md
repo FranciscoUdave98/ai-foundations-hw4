@@ -8,6 +8,8 @@ Francisco's Homework 4 for AI Foundations for Managers (Yale): a Campus Customs 
 
 Shoppers can browse products, create accounts, chat with the **Bulldog Assistant** about merch, see matching items, ask about price and stock, and keep a bag (the assistant only adds items after the shopper confirms).
 
+**Live app check (screenshots of the running site):** https://franciscoudave98.github.io/ai-foundations-hw4/output/app_check.html
+
 **Full system guide:** [`output/harness.md`](output/harness.md) (architecture, models, loop limits, tools, data types, safety rules, audit trail). Also see [`output/usability.md`](output/usability.md), [`output/design.md`](output/design.md), and the screenshot check [`output/app_check.html`](output/app_check.html).
 
 ## Setup

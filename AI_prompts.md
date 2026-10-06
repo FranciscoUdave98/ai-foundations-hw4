@@ -408,3 +408,17 @@ The gate unit test refused a same-turn confirmation, a vague reply, and a replay
 - The product page told shoppers to "ask our assistant to hold one", which the assistant can't do, and the Bag page and harness mentioned an "Add to bag" button that was never built. The product page now has a real "Add to bag" button (or "Log in to add to bag"), using the existing bag API. The shopper's own click counts as consent.
 - A status line read "Checking if a M is hiding…"; it's now "a size M".
 - Lint clean-ups: `raise … from None` in the chat route and unused loop variables in `analyze_database.py`. None of them was a behavior bug.
+
+
+## Grader walkthrough and GitHub Pages
+
+### Prompts
+
+> can you do those steps as if you were a grader and show me the results? no cheating
+
+> ok do it
+
+### Summary
+
+- **Grader walkthrough:** done on a fresh `git clone` of the public repo, using only the README's steps and the course's original `data.zip`. Setup, both servers, and every site flow worked: products, the chat stock check, live search cards, zoom, the related carousel, login, and the bag (asks to confirm, then adds after "yes"). The temporary clone, including its `.env`, was deleted afterwards.
+- **GitHub Pages:** turned on for the repo (main branch), so `output/app_check.html` renders with its screenshots at https://franciscoudave98.github.io/ai-foundations-hw4/output/app_check.html instead of showing as raw HTML. `.env` and the database are not published (404). The README now links to it.
